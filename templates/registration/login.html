@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>S99</title>
+	{% block container %}
+	<h1>Login</h1>
+	{% if error%}
+	<p style="color: red">Usuario o contraseña incorrecta</p>
+{% endif %}
+    <form method="POST">
+		 {% csrf_token %}
+		<input type="text" placeholder="Username" name="username"/>
+		<input type="password" placeholder="Password" name="password"/>
+		<button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
+		</form>
+		
+	{% endblock%}
+</head>
+<body>
+	
+</body>
+</html>

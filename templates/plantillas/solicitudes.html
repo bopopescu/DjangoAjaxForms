@@ -1,0 +1,10 @@
+{% extends "plantillas/base.html" %}
+{% block content %}
+{{user.fec}}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form_2.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}

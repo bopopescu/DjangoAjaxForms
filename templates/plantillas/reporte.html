@@ -1,0 +1,41 @@
+
+{% extends "plantillas/base.html" %}
+
+{% block content %}
+<table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">No. Empleado</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Inicio de Labores</th>
+            <th scope="col">Area</th>
+            <th scope="col">Dias Disponibles</th>
+            <th scope="col">Horas Disponibles</th>
+            <th scope="col">Inicio de Vacaciones</th>
+            <th scope="col">Fin de Vacaciones</th>
+            <th scope="col">Ultimas Vacaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for abc in obj %}
+          <tr>
+            <td>{{ abc.numero_empleado }}</td>
+            <td>{{ abc.nombre }}</td>
+            <td>{{ abc.apellido }}</td>
+            <td>{{ abc.f_init }}</td>
+            <td>{{ abc.area }}</td>
+            <td>{{ abc.d_pendientes }}</td>
+            <td>{{ abc.h_pendientes }}</td>
+            <td>{{ abc.init_vac }}</td>
+            <td>{{ abc.fin_vac }}</td>
+            <td>{{ abc.ul_vac_tomadas }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+      </table>
+{% endblock %}

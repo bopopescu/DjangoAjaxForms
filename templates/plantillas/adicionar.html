@@ -1,0 +1,10 @@
+{% extends "plantillas/base.html" %}
+{% block content %}
+{% now "Y-m-d H:i:s" %}
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}
+
