@@ -2,7 +2,7 @@ from django import forms
 from .models import LocalUsers, Peticion, Disponibilidad, Status
 
 
-class SolitForm(forms.Form):
+class addiForm(forms.ModelForm):
     class Meta:
         """Formulario de solicitud"""
 

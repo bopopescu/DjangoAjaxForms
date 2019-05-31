@@ -26,7 +26,10 @@
   <div class="collapse navbar-collapse" id="navbarColor03">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'solit' %}"><strong><H6>Solicitar</H6></strong><span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'adicion' %}"><strong><H6>Adicionar</H6></strong><span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'adicion' %}"><strong><H6>Solicitar</H6></strong><span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         {% if user.is_staff %}

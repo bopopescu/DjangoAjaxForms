@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from .models import LocalUsers, Peticion, Disponibilidad, Status
 from django.contrib.auth.models import User
-from .forms import SolitForm
+from .forms import addiForm
 # Create your views here.
 
 
@@ -52,26 +52,18 @@ def report(request):
 #Pagina de reporte
 
 @login_required
-def solit(request):
+def adicion(request, solicitudes_id):
     """Gestion de solicitudes"""
-    if request.method == 'POST':
-        form = SolitForm(request.POST, instance=request.user)
-        if form.is_valid():
-            LocalUsers.object.get(pk=form.cleaned_data['request.user'])
-            form.cleaned_data['d_pendientes'] = form.cleaned_data['dias_adicion'] + form.cleaned_data['d_pendientes']
-            form.save()
-            subject = 'Welcome {}'.format(request.user)
-            args = {'user': request.user}
-            from_email = 'jadamson@super99.com'
-            html_content = render_to_string('plantillas/send_mail.html', {'user':request.user})
-            msg = EmailMultiAlternatives(subject, html_content, from_email, ['jadamson@super99.com'])
-            msg.attach_alternative(html_content, 'plantillas/send_mail.html')
-            msg.send()
-        return redirect('send')
+    user = LocalUsers.object.get(pk=id)
+    if request.method == 'GET':
+        form = addiForm(instance=user)
     else:
-        form = SolitForm(instance=request.user)
-        args = {'form':form}
-    return render(request, 'plantillas/adicionar.html', args)
+        form = addiForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+        return redirect ('send')
+    return render (request, 'plantillas/adicionar.html', {'form':form})
+
     
 #Pagina de solicitudes
 
@@ -101,19 +93,3 @@ def send_view(request):
     return render(request, 'plantillas/sendview.html')
 
 
-def adicion(request):
-    """Gestion de solicitudes"""
-    if request.method == 'POST':
-        form2 = Sumaform(request.POST)
-        if form2.is_valid():
-            form.save()
-            subject = 'Welcome {}'.format(request.user)
-            from_email = 'jadamson@super99.com'
-            html_content = render_to_string('plantillas/send_mail.html', {'user':request.user})
-            msg = EmailMultiAlternatives(subject, from_email, ['jadamson@super99.com'])
-            msg.attach_alternative(html_content, 'plantillas/send_mail.html')
-            msg.send()
-        return redirect('send')
-    else:
-        form2 = Sumaform(request.POST)
-    return render(request, 'plantillas/solicitudes.html', {'form2':form2})

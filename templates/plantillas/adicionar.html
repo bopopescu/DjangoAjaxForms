@@ -1,6 +1,7 @@
 {% extends "plantillas/base.html" %}
 {% block content %}
 {% now "Y-m-d H:i:s" %}
+{{ user.solicitudes_id}}
 <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
