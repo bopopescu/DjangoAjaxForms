@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from .models import LocalUsers, Peticion, Disponibilidad, Status
 from django.contrib.auth.models import User
-from .forms import addiForm
+from .forms import addiForm, baseForm
 # Create your views here.
 
 
@@ -52,19 +52,21 @@ def report(request):
 #Pagina de reporte
 
 @login_required
-def adicion(request, solicitudes_id):
+def adicion(request):
+    
     """Gestion de solicitudes"""
-    user = LocalUsers.object.get(pk=id)
-    if request.method == 'GET':
-        form = addiForm(instance=user)
-    else:
-        form = addiForm(request.POST, instance=user)
-        if form.is_valid():
+    if request.method == 'POST':
+        form = addiForm(request.POST, instance=request.user)
+        form2 = baseForm(request.POST, instance=request.user)
+        if form.is_valid and form2.is_valid():
             form.save()
         return redirect ('send')
-    return render (request, 'plantillas/adicionar.html', {'form':form})
-
     
+    else:
+        form = addiForm(instance=request.user)
+        args = {'form': form}
+    return render (request, 'plantillas/adicionar.html', {'form':form}, args)
+   
 #Pagina de solicitudes
 
     
