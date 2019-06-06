@@ -51,19 +51,6 @@ def report(request):
     return render(request,"plantillas/reporte.html", context)       
 #Pagina de reporte
 
-@login_required
-def adicion(request):
-    """Gestion de solicitudes"""
-    if request.method == 'POST':
-        form = addiForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-        return redirect('send')
-    else:
-        form = addiForm(instance=request.user)
-        args = {'form':form}
-    return render(request, 'plantillas/adicionar.html', args)
-
 
         
    
