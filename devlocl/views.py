@@ -53,19 +53,19 @@ def report(request):
 
 @login_required
 def adicion(request):
-    
     """Gestion de solicitudes"""
     if request.method == 'POST':
         form = addiForm(request.POST, instance=request.user)
-        form2 = baseForm(request.POST, instance=request.user)
-        if form.is_valid and form2.is_valid():
+        if form.is_valid():
             form.save()
-        return redirect ('send')
-    
+        return redirect('send')
     else:
         form = addiForm(instance=request.user)
-        args = {'form': form}
-    return render (request, 'plantillas/adicionar.html', {'form':form}, args)
+        args = {'form':form}
+    return render(request, 'plantillas/adicionar.html', args)
+
+
+        
    
 #Pagina de solicitudes
 

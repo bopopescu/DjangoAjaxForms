@@ -58,7 +58,7 @@ class Peticion(models.Model):
     periodo_init = models.DateField(max_length = 200, null=True, blank=True)
     periodo_fin = models.DateField(max_length = 200, null=True, blank=True)
     dias_adicion = models.IntegerField(null=True, blank=False)
-    horas_adicion = models.IntegerField(null=True, blank=False)
+    horas_adicion = models.FloatField(null=True, blank=False)
         
 
 
@@ -75,11 +75,9 @@ class Disponibilidad(models.Model):
     periodo_i = models.DateField(max_length = 200, null=True, blank=False)
     periodo_f = models.DateField(max_length = 200, null=True, blank=False)
     dias_disponer = models.IntegerField(null=True, blank=False)
-    horas_disponer = models.IntegerField(null=True, blank=False)
+    horas_disponer = models.FloatField(null=True, blank=False)
             
    
-
-
 class Status(models.Model):
     stats_choices = (
         ('Aprobar','Aprobar'),
