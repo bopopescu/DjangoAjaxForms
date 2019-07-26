@@ -3,9 +3,12 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from .models import LocalUsers, Peticion, Disponibilidad, Status
-from django.contrib.auth.models import User
-from .forms import addiForm, baseForm
+from .models import Usuarios, Peticion, Disponibilidad, Status
+from django.contrib.auth.models import User, AbstractUser
+from .forms import addiForm
+import json 
+from django.http import JsonResponse
+from django.urls import reverse
 # Create your views here.
 
 
@@ -18,7 +21,7 @@ def index(request):
     
         
 def report(request):
-    obj = LocalUsers.object.all()
+    obj = Usuarios.objects.all()
     for abc in obj:
         obj_user = abc.usuario
         obj_nu_empleado = abc.numero_empleado
@@ -51,11 +54,26 @@ def report(request):
     return render(request,"plantillas/reporte.html", context)       
 #Pagina de reporte
 
+def solit(request):
+    if request.method == 'POST' and request.is_ajax():
+        form = addiForm(request.POST)
+        if form.is_valid():
+            peticion = form.save(commit=False)
+            if peticion.usuario:
+                peticion.usuario = request.user
+                peticion.save()
+                peticion.usuario.d_pendientes = form.cleaned_data.POST.get('dias_adicionar', None)  # Get the form value if has, otherwise assign it to None (change it if you want another default value)
+                peticion.usuario.h_pendientes = form.cleaned_data.POST.get('horas_adicionar', None)  # The same
+                peticion.usuario.save()            
+            return JsonResponse({'status': 'true', 'msg': 'Procesado Correctamente'})
+        else:
+            return JsonResponse({'status': 'false', 'msg': 'Los datos no son validos'})
 
-        
-   
+    form = addiForm()
+    return render(request, 'plantillas/adicionar.html', {'form':form})
+
+     
 #Pagina de solicitudes
-
     
 def login_view(request):
     if request.method == 'POST':

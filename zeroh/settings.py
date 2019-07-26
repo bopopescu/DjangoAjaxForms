@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'devlocl',
-    'rest_framework',
-    'webpack_loader'
+    
 ]
 
 MIDDLEWARE = [
@@ -78,8 +77,12 @@ WSGI_APPLICATION = 'zeroh.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'mysql.connector.django', 
+        'NAME': 'test',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
 
@@ -120,11 +123,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static')),
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 #Autenticacion de UserLocal
-AUTH_USER_MODEL = 'devlocl.LocalUsers'
+AUTH_USER_MODEL = 'devlocl.Usuarios'
 
 #Correo Settings
 EMAIL_HOST = 'pop.super99.com'
@@ -133,13 +138,3 @@ EMAIL_HOST_PASSWORD = '-Ad4ms0n0990'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'webpack_bundles/', # must end with slash
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
-        'POLL_INTERVAL': 0.1,
-        'TIMEOUT': None,
-    }
-}

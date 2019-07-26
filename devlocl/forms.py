@@ -1,5 +1,5 @@
 from django import forms
-from .models import LocalUsers, Peticion, Disponibilidad, Status
+from .models import Usuarios, Peticion, Disponibilidad, Status
 
 
 class addiForm(forms.ModelForm):
@@ -31,27 +31,10 @@ class addiForm(forms.ModelForm):
             'horas_adicion':'Horas a adiciona, si es menos de 1 dia',
 
         }
-class baseForm(forms.ModelForm):
-
-    class Meta:
-
-
-        model = LocalUsers
-
-        fields = [
-
-            'nombre',
-            'apellido',
-            'd_pendientes',
-            'h_pendientes',
-        ]
-
-        labels = {
-
-            'nombre':'Nombre',
-            'apellido':'Apellido',
-            'd_pendientes':'Dias Disponibles',
-            'h_pendientes':'Horas Disponibles',
-
-
-         }
+        widgets = {
+            'razon': forms.TextInput(attrs={
+                'id': 'post-text',
+                'required': True,
+                'placeholder': 'Escribe tu razon'
+            }),
+        }

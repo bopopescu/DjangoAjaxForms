@@ -1,12 +1,60 @@
 {% extends "plantillas/base.html" %}
 {% block content %}
-{% now "Y-m-d H:i:s" %}
-{{ user.solicitudes_id}}
-<form method="POST">
+{% load staticfiles %}
+{% now "Y-m-d H:i:s" %} <br>
+{{ user.Peti}}
+{{ user.numero_empleado}}
+<script src="{% static 'js/int.js'%}"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+<div><form method="POST" id="demo" class="form-data" action="{% url 'solit' %}">
     {% csrf_token %}
-    {{form.as_p}}
-    {{form2.as_p}}
-    <button type="submit">Guardar</button>
-</form>
-{% endblock %}
+    <h6>Tipo de peticion:{{form.petit}}</h6>
+    <h6>Razon:{{form.razon}}</h6>
+    <h6>{{form.solicitudes_id}}</h6>
+    <h6>Fecha inicio:{{form.periodo_init}}</h6>
+    <h6>Fecha fin:{{form.periodo_fin}}</h6>
+    <h6>Introduzca dias a tomar<input id="dias" type="number" name="dias_adicion"></h6>
+    <h6>Introduzca horas a tomar<input id="horas" type="number" name="horas_adicion"></h6>
+    <input type="hidden" id="const_dias" name="d_pendientes" value="{{ user.d_pendientes }}">
+    <input type="hidden" id="const_horas" name="h_pendientes" value="{{ user.h_pendientes }}">
 
+    <button type="submit" onclick="calculo()">Guardar</button>
+</div></form></span>
+<h6>Recuerde, que usted dispone de {{ user.d_pendientes }} dias y {{ user.h_pendientes }} horas</h6>
+
+<script>
+  $(document).ready(function(calculo){
+    var productForm = $("#demo")
+
+    productForm.submit(function(event){
+      event.preventDefault();
+      
+      var thisForm = $(this)
+      var actionEndpoint = thisForm.attr("action");
+      var httpMethod = thisForm.attr("method");
+      var formData = thisForm.serialize();
+
+      $.ajax({
+        url: actionEndpoint,
+        method: httpMethod,
+        data: formData,
+        success: function(data){
+          console.log("success")
+          console.log(data)
+        },
+        error: function(erroData){
+          console.log("error")
+          console.log(erroData)
+        }
+      })
+
+    })
+  })
+
+
+</script>
+
+{% endblock %}
